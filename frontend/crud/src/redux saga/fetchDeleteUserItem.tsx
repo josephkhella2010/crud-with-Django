@@ -10,19 +10,20 @@ import {
 
 import { setDeleteUserItem } from "../redux slices/userInfoSlice";
 import { fetchApi } from "../utilities/apiHeader";
+/*
 import type { itemsType, UserType } from "../utilities/interfaces";
-interface AddItemResponse {
+ interface AddItemResponse {
   msg: string;
   user: UserType;
   items: itemsType[];
-}
+} */
 
 function* fetchDeleteUserItem(
   action: PayloadAction<{ userId: number; itemId: number }>,
 ) {
   try {
     yield put(setLoading());
-    const response: AddItemResponse = yield call(
+    yield call(
       fetchApi,
       `/delete-user-item/userId=${action.payload.userId}/itemId=${action.payload.itemId}/`,
       "DELETE",

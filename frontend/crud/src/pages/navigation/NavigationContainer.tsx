@@ -54,7 +54,6 @@ export default function NavigationContainer() {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { users } = useSelector((state: RootState) => state.UserInfoData);
   const { userInfo } = useSelector((state: RootState) => state.LoginInfoData);
   /* functions */
   /* if  */

@@ -20,7 +20,7 @@ const registerUserSlice = createSlice({
     // 🔵 REQUEST (trigger saga)
     fetchRegisterUserRequest: (
       state,
-      action: PayloadAction<Partial<UserType>>,
+      _action: PayloadAction<Partial<UserType>>,
     ) => {
       state.loading = true;
       state.error = null;
