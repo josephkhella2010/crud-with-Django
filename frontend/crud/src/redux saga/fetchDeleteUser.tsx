@@ -1,0 +1,43 @@
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import {
+  loadingDeleteUser,
+  setDeleteError,
+  fetchDeleteUsersRequest,
+  setDeleteUser,
+} from "../redux slices/deleteUserSlice";
+import axios from "axios";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+const token = localStorage.getItem("token") || null;
+async function deleteUserApi(id: number) {
+  const response = await axios.delete(
+    `http://127.0.0.1:8000/api/delete-user/${id}/`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return response.data;
+}
+
+function* fetchDeleteUser(action: PayloadAction<number>) {
+  try {
+    yield put(loadingDeleteUser());
+    // call API
+    yield call(deleteUserApi, action.payload);
+    yield put(setDeleteUser());
+    toast.success("user Deleted sucessfully");
+  } catch (error: any) {
+    const message =
+      error?.response?.data?.sms ||
+      error?.response?.data?.error ||
+      "Login failed";
+    yield put(setDeleteError(message));
+  }
+}
+
+export function* watchDeleteUser() {
+  yield takeLatest(fetchDeleteUsersRequest.type, fetchDeleteUser);
+}
