@@ -2,6 +2,7 @@ import { createUseStyles } from "react-jss";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { RootState } from "../../../store/store";
+import UserNameSection from "./UserNameSection";
 
 export const cssStyle = createUseStyles({
   desktopNavBarContainer: {
@@ -20,6 +21,7 @@ export const cssStyle = createUseStyles({
     "& li": {
       listStyle: "none",
       cursor: "pointer",
+      color: "white",
     },
   },
   btnContainer: {
@@ -29,14 +31,7 @@ export const cssStyle = createUseStyles({
   },
 });
 
-interface PropsType {
-  handleDelete: any;
-  handleLogOut: any;
-}
-export default function DesktopNavigation({
-  handleDelete,
-  handleLogOut,
-}: PropsType) {
+export default function DesktopNavigation() {
   const classes = cssStyle();
   const { token } = useSelector(
     (state: RootState) => state.LoginInfoData.userInfo,
@@ -66,13 +61,8 @@ export default function DesktopNavigation({
         <li onClick={() => handleListClick("item")}>Show Items</li>
         <li onClick={() => handleListClick("register")}> Register</li>
         <li onClick={() => handleListClick("login")}> Login</li>
-        {token && (
-          <div className={classes.btnContainer}>
-            <p onClick={() => handleDelete()}> delete User</p>
-            <p onClick={handleLogOut}> logout</p>
-          </div>
-        )}
       </ul>
+      <UserNameSection />
     </div>
   );
 }

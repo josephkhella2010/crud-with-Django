@@ -3,11 +3,6 @@ import DesktopNavigation from "./childComponent/DesktopNavigation";
 import MobileNavigation from "./childComponent/MobileNavigation";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchDeleteUsersRequest } from "../../redux slices/deleteUserSlice";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../store/store";
-import { toast } from "react-toastify";
-import { setlogoutUser } from "../../redux slices/loginUserSlice";
 
 export const cssStyle = createUseStyles({
   navBarWrapper: {
@@ -15,6 +10,8 @@ export const cssStyle = createUseStyles({
     width: "100%",
     padding: "0px 20px",
     height: "60px",
+    position: "fixed",
+    zIndex: "100",
   },
   navBarMainContainer: {
     display: "flex",
@@ -42,7 +39,6 @@ export const cssStyle = createUseStyles({
   },
   rightnavBarContainer: {
     width: "90%",
-    backgroundColor: "yellow",
     height: "100%",
     display: "flex",
     alignItems: "center",
@@ -53,8 +49,6 @@ export default function NavigationContainer() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { userInfo } = useSelector((state: RootState) => state.LoginInfoData);
   /* functions */
   /* if  */
 
@@ -73,38 +67,28 @@ export default function NavigationContainer() {
     };
   }, []);
   /*  */
-  /* delete */
-  function handleDelete() {
-    if (!userInfo?.user?.id) return;
-
-    dispatch(fetchDeleteUsersRequest(userInfo.user.id));
-  }
-  /* logout */
-  function handleLogOut() {
-    dispatch(setlogoutUser());
-    toast.success("logout successfully 🎉");
-  }
 
   /*  */
   return (
     <div className={classes.navBarWrapper}>
       <div className={classes.navBarMainContainer}>
         <div className={classes.navBarContainer}>
-          <div className={classes.logoContainer} onClick={() => navigate("/")}>
+          <div
+            className={classes.logoContainer}
+            onClick={() => {
+              navigate("/");
+              setShowMobileMenu(false);
+            }}
+          >
             <img src="/foto/logo.png" alt="not found" />
           </div>
           {isMobile ? (
             <MobileNavigation
               showMobileMenu={showMobileMenu}
               setShowMobileMenu={setShowMobileMenu}
-              handleDelete={handleDelete}
-              handleLogOut={handleLogOut}
             />
           ) : (
-            <DesktopNavigation
-              handleDelete={handleDelete}
-              handleLogOut={handleLogOut}
-            />
+            <DesktopNavigation />
           )}
         </div>
       </div>

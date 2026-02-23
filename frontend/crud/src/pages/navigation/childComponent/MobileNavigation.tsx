@@ -4,12 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { createUseStyles } from "react-jss";
 import { FaArrowLeft } from "react-icons/fa";
 import { useEffect } from "react";
+import UserNameSection from "./UserNameSection";
 
 interface PropsType {
   showMobileMenu: boolean;
   setShowMobileMenu: (showMobileMenu: boolean) => void;
-  handleDelete: () => void;
-  handleLogOut: () => void;
 }
 
 export const cssStyle = createUseStyles({
@@ -32,14 +31,7 @@ export const cssStyle = createUseStyles({
     flexDirection: "column",
     gap: "30px",
   },
-  avatarContainer: {
-    borderRadius: "50%",
-    padding: "15px",
-    backgroundColor: "green",
-    cursor: "pointer",
-    color: "white",
-    letterSpacing: "3px",
-  },
+
   mobileNavBarArrowIcon: {
     cursor: "pointer",
   },
@@ -89,20 +81,12 @@ export const cssStyle = createUseStyles({
 export default function MobileNavigation({
   showMobileMenu,
   setShowMobileMenu,
-  handleDelete,
-  handleLogOut,
 }: PropsType) {
   const classes = cssStyle();
   const { token } = useSelector(
     (state: RootState) => state.LoginInfoData.userInfo,
   );
-  const userStorage = localStorage.getItem("user");
 
-  const user = userStorage ? JSON.parse(userStorage) : null;
-  console.log(token, user);
-  const username =
-    user?.username.slice(0, 1).toUpperCase() +
-    user?.username.slice(-1).toUpperCase();
   const navigate = useNavigate();
   /* function */
   const handleListClick = (name: string) => {
@@ -153,30 +137,14 @@ export default function MobileNavigation({
             style={{ color: "white", fontSize: "22px", cursor: "pointer" }}
             title="Back"
           />
-          {token && (
-            <div
-              onClick={() => {
-                navigate("/update-profile");
-                setShowMobileMenu(false);
-              }}
-              className={classes.avatarContainer}
-              title="Update Details"
-            >
-              <h3>{username}</h3>
-            </div>
-          )}
+
+          <UserNameSection setShowMobileMenu={setShowMobileMenu} />
         </div>
 
         <ul className={`${classes.mobileNavBarList} `}>
           <li onClick={() => handleListClick("item")}>Show Items</li>
           <li onClick={() => handleListClick("register")}> Register</li>
           <li onClick={() => handleListClick("login")}> Login</li>
-          {token && (
-            <>
-              <li onClick={() => handleDelete()}> Delete User</li>
-              <li onClick={handleLogOut}> Logout</li>
-            </>
-          )}
         </ul>
       </div>
     </div>

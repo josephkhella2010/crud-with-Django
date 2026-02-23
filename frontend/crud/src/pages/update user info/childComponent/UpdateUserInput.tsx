@@ -6,6 +6,7 @@ import { fetchUpdateUserRequest } from "../../../redux slices/updateUserSlice";
 import type { AppDispatch, RootState } from "../../../store/store";
 import { fetchUsersRequest } from "../../../redux slices/userInfoSlice";
 import { createUseStyles } from "react-jss";
+import { useNavigate } from "react-router-dom";
 
 export const cssStyle = createUseStyles({
   updatePageMainContainer: {
@@ -66,6 +67,7 @@ export const cssStyle = createUseStyles({
 export default function UpdateUserInput() {
   const classes = cssStyle();
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   // subscribe to users array
   const users = useSelector((state: RootState) => state.UserInfoData.users);
 
@@ -101,9 +103,6 @@ export default function UpdateUserInput() {
     setUpdateInputsVal((prev) => ({ ...prev, [name]: value }));
   };
 
-  /*  const [errors, setErrors] = useState<string[]>(
-    Array.from({ length: 2 }, () => ""),
-  ); */
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -116,6 +115,7 @@ export default function UpdateUserInput() {
         data: updateInputsVal as UserType,
       }),
     );
+    navigate("/");
   };
 
   /* get users */

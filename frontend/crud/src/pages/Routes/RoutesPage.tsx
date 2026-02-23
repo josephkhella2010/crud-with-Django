@@ -8,22 +8,36 @@ import UpdateUserInfo from "../update user info/UpdateUserInfo";
 import TodoPage from "../Todo Page/TodoPage";
 import ItemDetailsPage from "../Item Details/ItemDetailsPage";
 import NavigationContainer from "../navigation/NavigationContainer";
+import SettingPage from "../setting Page/SettingPage";
+import UserInfoPage from "../UserInfoPage/UserInfoPage";
+import { createUseStyles } from "react-jss";
+
+export const cssStyle = createUseStyles({
+  mainWrapper: {
+    padding: "60px 0px 0px 0px",
+  },
+});
 
 export default function RoutesPage() {
+  const classes = cssStyle();
   return (
     <div>
       <ToastContainer />{" "}
       <Router>
         <NavigationContainer />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about-us" element={<AboutPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/update-profile" element={<UpdateUserInfo />} />
-          <Route path="/add-task" element={<TodoPage />} />
-          <Route path="/item-details/:id" element={<ItemDetailsPage />} />
-        </Routes>
+        <div className={classes.mainWrapper}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about-us" element={<AboutPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/update-profile" element={<UpdateUserInfo />} />
+            <Route path="/add-task" element={<TodoPage />} />
+            <Route path="/item-details/:id" element={<ItemDetailsPage />} />
+            <Route path="/setting-user" element={<SettingPage />} />
+            <Route path="/user-info" element={<UserInfoPage />} />
+          </Routes>
+        </div>
       </Router>
     </div>
   );

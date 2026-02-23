@@ -36,6 +36,12 @@ export const cssStyle = createUseStyles({
     flexDirection: "column",
     gap: "20px",
     boxShadow: "0 2px 8px rgba(0, 128, 0, 0.15)",
+    "@media (max-width: 1600px)": {
+      width: "30%",
+    },
+    "@media (max-width: 1000px)": {
+      width: "50%",
+    },
     "@media (max-width: 650px)": {
       width: "100%",
     },
