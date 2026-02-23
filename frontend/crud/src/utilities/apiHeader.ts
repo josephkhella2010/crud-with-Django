@@ -11,7 +11,7 @@ export const logout = () => {
 
 // Axios instance
 export const apiClient = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/",
+  baseURL: "https://backend-crud-with-django-2mmh.onrender.com/api/",
   headers: {
     "Content-Type": "application/json",
   },
