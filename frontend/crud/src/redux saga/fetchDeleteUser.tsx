@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+/* import { call, put, takeLatest } from "redux-saga/effects";
 
 import {
   loadingDeleteUser,
@@ -38,6 +38,51 @@ function* fetchDeleteUser(action: PayloadAction<number>) {
   }
 }
 
+export function* watchDeleteUser() {
+  yield takeLatest(fetchDeleteUsersRequest.type, fetchDeleteUser);
+}
+ */
+import { call, put, takeLatest } from "redux-saga/effects";
+import type { PayloadAction } from "@reduxjs/toolkit";
+
+import {
+  loadingDeleteUser,
+  setDeleteError,
+  fetchDeleteUsersRequest,
+  setDeleteUser,
+} from "../redux slices/deleteUserSlice";
+
+import { fetchApi } from "../utilities/apiHeader";
+import { toast } from "react-toastify";
+
+/* 🧠 Worker */
+function* fetchDeleteUser(action: PayloadAction<number>) {
+  try {
+    yield put(loadingDeleteUser());
+
+    // ✅ Use shared API helper (JWT automatically included)
+    yield call(
+      fetchApi,
+      `delete-user/${action.payload}/`, // endpoint
+      "DELETE", // method
+      undefined, // no body
+      true, // requires JWT
+    );
+
+    yield put(setDeleteUser());
+
+    toast.success("User Deleted successfully");
+  } catch (error: any) {
+    const message =
+      error?.response?.data?.sms ||
+      error?.response?.data?.error ||
+      "Delete failed";
+
+    yield put(setDeleteError(message));
+  }
+}
+
+/* 👀 Watcher */
 export function* watchDeleteUser() {
   yield takeLatest(fetchDeleteUsersRequest.type, fetchDeleteUser);
 }

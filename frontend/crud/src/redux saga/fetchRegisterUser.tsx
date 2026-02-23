@@ -1,47 +1,38 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import axios from "axios";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import type { UserType } from "../utilities/interfaces";
-import { setAddUser } from "../redux slices/userInfoSlice";
+
 import {
   fetchRegisterUserRequest,
   fetchRegisterUserSuccess,
   fetchUserFailed,
 } from "../redux slices/registerUserSlice";
 
-// 1️⃣ API call
-export async function fetchApiRegisterUser(
-  userData: Partial<UserType>,
-): Promise<UserType> {
-  const response = await axios.post(
-    "https://crud-with-django-ix73.onrender.com/api/register-user/",
-    userData,
-  );
-  return response.data;
-}
+import { setAddUser } from "../redux slices/userInfoSlice";
+import { fetchApi } from "../utilities/apiHeader";
 
-// 2️⃣ Saga worker
-function* fetchApiRegisterUserSaga(
-  action: ReturnType<typeof fetchRegisterUserRequest>,
-) {
+/* 🧠 Worker */
+function* fetchApiRegisterUserSaga(action: PayloadAction<Partial<UserType>>) {
   try {
-    // Call the API
-    const newUser: UserType = yield call(fetchApiRegisterUser, action.payload);
+    // ✅ Correctly call generic API
+    const newUser: UserType = yield call(
+      fetchApi,
+      "register-user/", // endpoint
+      "POST", // method
+      action.payload, // data
+      false, // register doesn't need JWT
+    );
 
-    // Log the newly created user
-    console.log("🆕 New user created:", newUser);
-
-    // Dispatch success with the new user
     yield put(fetchRegisterUserSuccess(newUser));
 
-    // Add the user to userInfoSlice
+    // update users list
     yield put(setAddUser(newUser));
   } catch (error: any) {
-    console.log("Register error:", error.response?.data?.sms || error.message);
     yield put(fetchUserFailed(error.response?.data?.sms || error.message));
   }
 }
 
-// 3️⃣ Saga watcher
+/* 👀 Watcher */
 export function* watchRegisterUserSaga() {
-  yield takeLatest(fetchRegisterUserRequest, fetchApiRegisterUserSaga);
+  yield takeLatest(fetchRegisterUserRequest.type, fetchApiRegisterUserSaga);
 }
