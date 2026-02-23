@@ -50,6 +50,7 @@ const userInfoSlice = createSlice({
         // if user not in users array, add it
         state.users.push(action.payload);
       }
+      localStorage.setItem("user", JSON.stringify(action.payload));
 
       state.loading = false;
       state.error = null;

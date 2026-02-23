@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState, AppDispatch } from "../../store/store";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../store/store";
 import { fetchUsersRequest } from "../../redux slices/userInfoSlice";
-
 import HomePageSectionOne from "./childComponent/HomePageSectionOne";
 import HomePageSectionSecondContainer from "./childComponent/HomePageSectionSecondContainer";
 import HomePageThirdSection from "./childComponent/HomePageThirdSection";
@@ -37,7 +36,6 @@ export const cssStyle = createUseStyles({
 export default function HomePage() {
   const classes = cssStyle();
   const dispatch = useDispatch<AppDispatch>();
-  const { users } = useSelector((state: RootState) => state.UserInfoData);
 
   const sections = [
     HomePageSectionOne,
@@ -57,8 +55,6 @@ export default function HomePage() {
   useEffect(() => {
     dispatch(fetchUsersRequest());
   }, [dispatch]);
-
-  console.log(users);
 
   useEffect(() => {
     const handleScroll = () => {

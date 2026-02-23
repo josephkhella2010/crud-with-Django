@@ -107,11 +107,23 @@ export default function SettingPage() {
               <FaUserTie />
               <span> User Information</span>
             </li>
-            <li onClick={() => handleDelete()} style={{ color: "green" }}>
+            <li
+              onClick={() => {
+                handleDelete();
+                navigate("/");
+              }}
+              style={{ color: "green" }}
+            >
               <AiOutlineUsergroupDelete />
               <span> Delete User</span>
             </li>
-            <li onClick={handleLogOut} style={{ color: "green" }}>
+            <li
+              onClick={() => {
+                handleLogOut;
+                navigate("/");
+              }}
+              style={{ color: "green" }}
+            >
               <IoIosLogOut />
               <span> Logout User </span>
             </li>

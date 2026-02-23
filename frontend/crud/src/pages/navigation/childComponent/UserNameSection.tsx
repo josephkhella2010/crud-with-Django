@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import type { RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createUseStyles } from "react-jss";
+import { useEffect } from "react";
+import { fetchUsersRequest } from "../../../redux slices/userInfoSlice";
 
 interface PropsType {
   setShowMobileMenu?: (showMobileMenu: boolean) => void;
@@ -25,17 +27,29 @@ export const cssStyle = createUseStyles({
 
 export default function UserNameSection({ setShowMobileMenu }: PropsType) {
   const classes = cssStyle();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const userStorage = localStorage.getItem("user");
+  const storedUser = userStorage ? JSON.parse(userStorage) : null;
+
   const { token } = useSelector(
     (state: RootState) => state.LoginInfoData.userInfo,
   );
-  const userStorage = localStorage.getItem("user");
 
-  const user = userStorage ? JSON.parse(userStorage) : null;
-  console.log(token, user);
-  const username =
-    user?.username.slice(0, 1).toUpperCase() +
-    user?.username.slice(-1).toUpperCase();
-  const navigate = useNavigate();
+  const user = useSelector((state: RootState) =>
+    state.UserInfoData.users.find((u) => u.id === storedUser?.id),
+  );
+  const username = user
+    ? user.username.slice(0, 1).toUpperCase() +
+      user.username.slice(-1).toUpperCase()
+    : "";
+
+  // fetch all users
+  useEffect(() => {
+    dispatch(fetchUsersRequest());
+  }, [dispatch]);
+  console.log("user", user);
   return (
     <>
       {token && (
