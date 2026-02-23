@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 const token = localStorage.getItem("token") || null;
 async function deleteUserApi(id: number) {
   const response = await axios.delete(
-    `http://127.0.0.1:8000/api/delete-user/${id}/`,
+    `https://crud-with-django-ix73.onrender.com/api/delete-user/${id}/`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

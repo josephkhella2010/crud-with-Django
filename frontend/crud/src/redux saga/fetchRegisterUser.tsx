@@ -1,4 +1,3 @@
-
 import { call, put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import type { UserType } from "../utilities/interfaces";
@@ -14,7 +13,7 @@ export async function fetchApiRegisterUser(
   userData: Partial<UserType>,
 ): Promise<UserType> {
   const response = await axios.post(
-    "http://127.0.0.1:8000/api/register-user/",
+    "https://crud-with-django-ix73.onrender.com/api/register-user/",
     userData,
   );
   return response.data;
