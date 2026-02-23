@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-gunicorn projectname.wsgi:application
+gunicorn backend_crud.wsgi:application
