@@ -9,7 +9,11 @@ import {
 
 import { setAddUser } from "../redux slices/userInfoSlice";
 import { fetchApi } from "../utilities/apiHeader";
-import { clearLoading, setError, setLoading } from "../redux slices/loadingAndErrorSlice";
+import {
+  clearLoading,
+  setError,
+  setLoading,
+} from "../redux slices/loadingAndErrorSlice";
 
 /* 🧠 Worker */
 function* fetchApiRegisterUserSaga(action: PayloadAction<Partial<UserType>>) {
@@ -25,10 +29,7 @@ function* fetchApiRegisterUserSaga(action: PayloadAction<Partial<UserType>>) {
 
     yield put(fetchRegisterUserSuccess(newUser));
 
-    // update users list
-    yield put(setAddUser(newUser));
-        yield put(clearLoading());
-    
+    yield put(clearLoading());
   } catch (error: any) {
     yield put(setError(error.response?.data?.sms || error.message));
   }

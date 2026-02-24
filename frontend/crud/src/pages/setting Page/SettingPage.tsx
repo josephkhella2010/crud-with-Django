@@ -119,7 +119,8 @@ export default function SettingPage() {
             </li>
             <li
               onClick={() => {
-                handleLogOut;
+                handleLogOut();
+                navigate("/");
               }}
               style={{ color: "green" }}
             >

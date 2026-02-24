@@ -40,11 +40,10 @@ export default function UserNameSection({ setShowMobileMenu }: PropsType) {
   const user = useSelector((state: RootState) =>
     state.UserInfoData.users.find((u) => u.id === storedUser?.id),
   );
-  const username = user
+  const username = user?.username
     ? user.username.slice(0, 1).toUpperCase() +
       user.username.slice(-1).toUpperCase()
     : "";
-
   // fetch all users
   useEffect(() => {
     dispatch(fetchUsersRequest());
