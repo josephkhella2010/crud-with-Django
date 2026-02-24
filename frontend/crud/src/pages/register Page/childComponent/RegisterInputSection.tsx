@@ -10,7 +10,6 @@ import { fetchRegisterUserRequest } from "../../../redux slices/registerUserSlic
 import type { RootState } from "../../../store/store";
 import {
   fetchUsersRequest,
-  setAddUser,
 } from "../../../redux slices/userInfoSlice";
 import { createUseStyles } from "react-jss";
 
