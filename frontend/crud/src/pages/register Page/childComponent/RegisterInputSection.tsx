@@ -8,9 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRegisterUserRequest } from "../../../redux slices/registerUserSlice";
 import type { RootState } from "../../../store/store";
-import {
-  fetchUsersRequest,
-} from "../../../redux slices/userInfoSlice";
+import { fetchUsersRequest } from "../../../redux slices/userInfoSlice";
 import { createUseStyles } from "react-jss";
 
 export const cssStyle = createUseStyles({
@@ -170,10 +168,7 @@ export default function RegisterInputSection() {
         password: registerInputVal.password,
         repassword: registerInputVal.repassword,
       };
-      toast.success("successfully registered");
-
       dispatch(fetchRegisterUserRequest(newUser));
-
       setRegisterInputVal({
         username: "",
         email: "",
