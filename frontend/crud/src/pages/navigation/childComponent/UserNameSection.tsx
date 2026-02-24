@@ -16,9 +16,7 @@ export const cssStyle = createUseStyles({
     cursor: "pointer",
     color: "white",
     letterSpacing: "3px",
-    "@media (max-width: 1500px)": {
-      backgroundColor: "#5ea75e",
-    },
+    backgroundColor: "#5ea75e",
     "@media (max-width: 650px)": {
       backgroundColor: "green",
     },
