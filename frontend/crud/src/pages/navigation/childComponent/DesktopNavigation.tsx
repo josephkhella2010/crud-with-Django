@@ -59,8 +59,12 @@ export default function DesktopNavigation() {
     <div className={classes.desktopNavBarContainer}>
       <ul className={classes.desktopNavBarList}>
         <li onClick={() => handleListClick("item")}>Show Items</li>
-        <li onClick={() => handleListClick("register")}> Register</li>
-        <li onClick={() => handleListClick("login")}> Login</li>
+        {!token && (
+          <>
+            <li onClick={() => handleListClick("register")}> Register</li>
+            <li onClick={() => handleListClick("login")}> Login</li>
+          </>
+        )}
       </ul>
       <UserNameSection />
     </div>

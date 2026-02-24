@@ -143,8 +143,12 @@ export default function MobileNavigation({
 
         <ul className={`${classes.mobileNavBarList} `}>
           <li onClick={() => handleListClick("item")}>Show Items</li>
-          <li onClick={() => handleListClick("register")}> Register</li>
-          <li onClick={() => handleListClick("login")}> Login</li>
+          {!token && (
+            <>
+              <li onClick={() => handleListClick("register")}> Register</li>
+              <li onClick={() => handleListClick("login")}> Login</li>
+            </>
+          )}
         </ul>
       </div>
     </div>
