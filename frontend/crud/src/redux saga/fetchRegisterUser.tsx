@@ -7,7 +7,6 @@ import {
   fetchRegisterUserSuccess,
 } from "../redux slices/registerUserSlice";
 
-import { setAddUser } from "../redux slices/userInfoSlice";
 import { fetchApi } from "../utilities/apiHeader";
 import {
   clearLoading,

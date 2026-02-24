@@ -13,11 +13,7 @@ const userInfoSlice = createSlice({
   name: "userInfoSlice",
   initialState,
   reducers: {
-  
-   
-    fetchUsersRequest: (_state) => {
-   
-    },
+    fetchUsersRequest: (_state) => {},
     setUsers: (state, action: PayloadAction<UserType[]>) => {
       state.users = action.payload;
     },
