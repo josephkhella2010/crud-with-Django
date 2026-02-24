@@ -169,6 +169,7 @@ export default function RegisterInputSection() {
         repassword: registerInputVal.repassword,
       };
       dispatch(fetchRegisterUserRequest(newUser));
+      toast.success("user successfully registered");
       setRegisterInputVal({
         username: "",
         email: "",

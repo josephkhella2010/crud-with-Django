@@ -13,7 +13,6 @@ import {
   setError,
   setLoading,
 } from "../redux slices/loadingAndErrorSlice";
-import { toast } from "react-toastify";
 
 /* 🧠 Worker */
 function* fetchApiRegisterUserSaga(action: PayloadAction<Partial<UserType>>) {
@@ -28,7 +27,6 @@ function* fetchApiRegisterUserSaga(action: PayloadAction<Partial<UserType>>) {
     );
 
     yield put(fetchRegisterUserSuccess(newUser));
-    toast.success("user successfully registered");
     yield put(clearLoading());
   } catch (error: any) {
     yield put(setError(error.response?.data?.sms || error.message));
