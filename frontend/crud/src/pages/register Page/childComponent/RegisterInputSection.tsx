@@ -184,7 +184,6 @@ export default function RegisterInputSection() {
   /*  */
   return (
     <div className={classes.registerMainContainer}>
-      <ToastContainer />
       <form
         action=""
         onSubmit={handleFormSubmit}
