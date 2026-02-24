@@ -17,7 +17,7 @@ export const apiClient = axios.create({
   },
 });
 // Add a response interceptor to catch 401
-apiClient.interceptors.response.use(
+/* apiClient.interceptors.response.use(
   (response) => response, // pass through successful responses
   (error) => {
     if (error.response && error.response.status === 401) {
@@ -26,6 +26,20 @@ apiClient.interceptors.response.use(
 
       logout();
     }
+    return Promise.reject(error);
+  },
+); */
+apiClient.interceptors.response.use(
+  (response) => response,
+
+  (error) => {
+    if (
+      error.response &&
+      [401, 403, 400, 404].includes(error.response.status)
+    ) {
+      logout();
+    }
+
     return Promise.reject(error);
   },
 );
