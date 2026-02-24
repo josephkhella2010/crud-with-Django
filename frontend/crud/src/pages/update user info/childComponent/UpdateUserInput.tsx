@@ -74,7 +74,7 @@ export default function UpdateUserInput() {
   // const token = localStorage.getItem("token");
   // get the logged-in user from localStorage
   const userStorage: UserType | null = JSON.parse(
-    localStorage.getItem("user") || "null",
+    sessionStorage.getItem("user") || "null",
   );
 
   const [updateInputsVal, setUpdateInputsVal] = useState<updateInputType>({

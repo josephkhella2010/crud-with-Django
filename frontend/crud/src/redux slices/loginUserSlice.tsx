@@ -39,10 +39,10 @@ const loginUserSlice = createSlice({
       state.userInfo.token = token;
 
       localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", token);
+      sessionStorage.setItem("token", token);
     },
     setlogoutUser: (state) => {
-      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
       localStorage.removeItem("user");
       /*   state.userInfo.user = null;
       state.userInfo.token = null; */

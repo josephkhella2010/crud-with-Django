@@ -43,7 +43,7 @@ function* sagaAddItem(
     yield put(
       setLoginUser({
         user: response.user,
-        token: localStorage.getItem("token") || "",
+        token: sessionStorage.getItem("token") || "",
       }),
     );
     localStorage.setItem("user", JSON.stringify(response.user));

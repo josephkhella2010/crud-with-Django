@@ -48,14 +48,14 @@ export default function HomePage() {
   const [visible, setVisible] = useState<boolean[]>(
     new Array(sections.length).fill(false),
   );
-
+  const token = sessionStorage.getItem("token");
   /* store DOM refs */
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     dispatch(fetchUsersRequest());
   }, [dispatch]);
-
+  console.log("token", token);
   useEffect(() => {
     const handleScroll = () => {
       const updated = [...visible];

@@ -1,10 +1,10 @@
 import axios from "axios";
 
 // JWT token helper
-export const getToken = () => localStorage.getItem("token") || "";
+export const getToken = () => sessionStorage.getItem("token") || "";
 // Logout helper
 export const logout = () => {
-  localStorage.removeItem("token");
+  sessionStorage.removeItem("token");
   localStorage.removeItem("user");
   window.location.href = "/login"; // redirect to login page
 };

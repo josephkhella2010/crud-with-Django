@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { LoginState } from "../utilities/interfaces";
 
 /* local storage */
-const token = localStorage.getItem("token") || null; // raw string, no JSON.parse
+const token = sessionStorage.getItem("token") || null; // raw string, no JSON.parse
 const jsonUser = localStorage.getItem("user") || null;
 const sortedUser = jsonUser ? JSON.parse(jsonUser) : null;
 
@@ -31,7 +31,7 @@ const deleteUserSlice = createSlice({
       state.userInfo.token = null;
     }, */
     setDeleteUser: (state) => {
-      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
       localStorage.removeItem("user");
       state.userInfo.user = null;
       state.userInfo.token = null;
@@ -39,7 +39,7 @@ const deleteUserSlice = createSlice({
     fetchDeleteUsersRequest: (state, _action: PayloadAction<number>) => {
       state.userInfo.user = null;
       state.userInfo.token = null;
-      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
       localStorage.removeItem("user");
     },
   },
