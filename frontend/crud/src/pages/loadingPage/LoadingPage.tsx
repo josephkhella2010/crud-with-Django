@@ -2,7 +2,6 @@ import { createUseStyles } from "react-jss";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { useEffect } from "react";
-import { IoEllipseSharp } from "react-icons/io5";
 
 export const cssStyle = createUseStyles({
   "@keyframes barAnimation": {
