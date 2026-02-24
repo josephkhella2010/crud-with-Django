@@ -27,8 +27,8 @@ export default function RoutesPage() {
   const { loading } = useSelector((state: RootState) => state.loadingData);
   return (
     <div>
-      <ToastContainer />{" "}
       <Router>
+        <ToastContainer />
         <NavigationContainer />
         <div className={classes.mainWrapper}>
           {loading && <LoadingPage />}
