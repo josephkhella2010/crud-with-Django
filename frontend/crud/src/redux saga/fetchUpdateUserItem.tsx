@@ -1,15 +1,15 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { TaskInputType, UserType } from "../utilities/interfaces";
-
-import {
-  setLoading,
-  setError,
-  fetchUpdateUserItem,
-} from "../redux slices/updateUserItemSlice";
+import { fetchUpdateUserItem } from "../redux slices/updateUserItemSlice";
 import { setUpdateUserItem } from "../redux slices/userInfoSlice"; // <--- import from users slice
 import { toast } from "react-toastify";
 import { fetchApi } from "../utilities/apiHeader";
+import {
+  clearLoading,
+  setError,
+  setLoading,
+} from "../redux slices/loadingAndErrorSlice";
 interface ApiResponse {
   msg: string;
   user: UserType; // or your UserType
@@ -41,6 +41,7 @@ function* fetchDeleteUserItem(
 
     localStorage.setItem("user", JSON.stringify(response.user));
     toast.success("user successfully  updated items");
+    yield put(clearLoading());
   } catch (error: any) {
     console.log(error);
     const message =

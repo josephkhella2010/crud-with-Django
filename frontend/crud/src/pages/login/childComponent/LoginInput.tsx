@@ -5,11 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
 import { fetchUsersRequest } from "../../../redux slices/userInfoSlice";
 import { toast } from "react-toastify";
-import {
-  fetchLoginUserRequest,
-  loadingLoginUser,
-  setLoginError,
-} from "../../../redux slices/loginUserSlice";
+import { fetchLoginUserRequest } from "../../../redux slices/loginUserSlice";
 
 import { createUseStyles } from "react-jss";
 
@@ -105,7 +101,6 @@ export default function LoginInput() {
   /*  hanndle Form */
   const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(loadingLoginUser());
     const existUser = users.find(
       (u) => u.username === loginVal.username || u.email === loginVal.username,
     );
@@ -145,8 +140,6 @@ export default function LoginInput() {
         password: "",
       });
     } catch (error) {
-      dispatch(setLoginError(error as string));
-
       console.log(error);
     }
   };

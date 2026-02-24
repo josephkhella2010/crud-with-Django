@@ -2,14 +2,15 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
-import {
-  setLoading,
-  setError,
-  fetchDeleteUserItemReqest,
-} from "../redux slices/deleteUserItemSlice";
+import { fetchDeleteUserItemReqest } from "../redux slices/deleteUserItemSlice";
 
 import { setDeleteUserItem } from "../redux slices/userInfoSlice";
 import { fetchApi } from "../utilities/apiHeader";
+import {
+  clearLoading,
+  setError,
+  setLoading,
+} from "../redux slices/loadingAndErrorSlice";
 /*
 import type { itemsType, UserType } from "../utilities/interfaces";
  interface AddItemResponse {
@@ -37,6 +38,7 @@ function* fetchDeleteUserItem(
       }),
     );
     toast.success("sucessfully Delete User Item");
+    yield put(clearLoading());
   } catch (error: any) {
     console.log(error);
     const message =

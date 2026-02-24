@@ -2,16 +2,17 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
-import {
-  setLoading,
-  setError,
-  fetchAddItem,
-} from "../redux slices/addItemsSlice";
+import { fetchAddItem } from "../redux slices/addItemsSlice";
 
 import { setAddItem } from "../redux slices/userInfoSlice";
 import { fetchApi } from "../utilities/apiHeader";
 import type { itemsType, UserType } from "../utilities/interfaces";
 import { setLoginUser } from "../redux slices/loginUserSlice";
+import {
+  clearLoading,
+  setError,
+  setLoading,
+} from "../redux slices/loadingAndErrorSlice";
 
 interface AddItemResponse {
   msg: string;
@@ -47,12 +48,12 @@ function* sagaAddItem(
     );
     localStorage.setItem("user", JSON.stringify(response.user));
     toast.success(response.msg || "Item added");
+    yield put(clearLoading());
   } catch (error: any) {
     const message =
       error?.response?.data?.msg ||
       error?.response?.data?.error ||
       "Add item failed";
-
     yield put(setError(message));
   }
 }

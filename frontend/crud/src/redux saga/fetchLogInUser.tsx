@@ -1,13 +1,12 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
-  loadingLoginUser,
-  setLoginError,
   setLoginUser,
   fetchLoginUserRequest,
 } from "../redux slices/loginUserSlice";
 import type { LoginPayload, UserType } from "../utilities/interfaces";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { fetchApi } from "../utilities/apiHeader";
+import { clearLoading, setError, setLoading } from "../redux slices/loadingAndErrorSlice";
 
 // Response type from backend
 export type LoginResponse = {
@@ -18,7 +17,7 @@ export type LoginResponse = {
 // Worker saga: handles login
 function* fetchLoginUser(action: PayloadAction<LoginPayload>) {
   try {
-    yield put(loadingLoginUser());
+    yield put(setLoading());
 
     // Call API with flat payload
     const response: LoginResponse = yield call(
@@ -26,13 +25,15 @@ function* fetchLoginUser(action: PayloadAction<LoginPayload>) {
       "/login-user/",
       "POST",
       action.payload,
-      false, 
+      false,
     );
 
     const { user, token } = response;
 
     // Store user and token in Redux
     yield put(setLoginUser({ user, token }));
+        yield put(clearLoading());
+    
   } catch (error: any) {
     // Extract error message from backend
     const message =
@@ -40,7 +41,7 @@ function* fetchLoginUser(action: PayloadAction<LoginPayload>) {
       error?.response?.data?.error ||
       "Login failed";
 
-    yield put(setLoginError(message));
+    yield put(setError(message));
   }
 }
 

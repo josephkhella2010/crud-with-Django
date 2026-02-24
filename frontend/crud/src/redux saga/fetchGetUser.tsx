@@ -1,23 +1,21 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import {
-  fetchUserLoading,
-  setUsers,
-  fetchUserFailed,
-  fetchUsersRequest,
-} from "../redux slices/userInfoSlice";
+import { setUsers, fetchUsersRequest } from "../redux slices/userInfoSlice";
 import type { UsersResponse } from "../utilities/interfaces";
 import { fetchApi } from "../utilities/apiHeader";
+import { clearLoading, setError, setLoading } from "../redux slices/loadingAndErrorSlice";
 
 function* fetchApiUser() {
   try {
-    yield put(fetchUserLoading());
+    yield put(setLoading());
     const response: UsersResponse = yield call(() =>
       fetchApi<UsersResponse>("/users", "GET", {}, true),
     );
     const { users } = response;
     yield put(setUsers(users));
+        yield put(clearLoading());
+    
   } catch (error) {
-    yield put(fetchUserFailed((error as Error).message));
+    yield put(setError((error as Error).message));
   }
 }
 

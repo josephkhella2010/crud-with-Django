@@ -12,16 +12,12 @@ const sortedUser = jsonUser ? JSON.parse(jsonUser) : null;
 
 /* initial state */
 interface LoginUserSliceType {
-  loading: boolean;
-  error: string | null;
   userInfo: LoginState;
 }
 
 /* initialstate */
 
 const initialState: LoginUserSliceType = {
-  loading: false,
-  error: null,
   userInfo: {
     user: sortedUser,
     token: token,
@@ -32,25 +28,11 @@ const loginUserSlice = createSlice({
   name: "loginUserSlice",
   initialState,
   reducers: {
-    loadingLoginUser: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    setLoginError: (state, action: PayloadAction<string | null>) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    fetchLoginUserRequest: (state, _action: PayloadAction<LoginPayload>) => {
-      state.loading = true;
-      state.error = null;
-    },
+    fetchLoginUserRequest: (_state, _action: PayloadAction<LoginPayload>) => {},
     setLoginUser: (
       state,
       action: PayloadAction<{ user: UserType; token: string }>,
     ) => {
-      state.loading = false;
-      state.error = null;
-
       const { user, token } = action.payload;
 
       state.userInfo.user = user;
@@ -75,11 +57,6 @@ const loginUserSlice = createSlice({
     },
   },
 });
-export const {
-  loadingLoginUser,
-  setLoginError,
-  setLoginUser,
-  fetchLoginUserRequest,
-  setlogoutUser,
-} = loginUserSlice.actions;
+export const { setLoginUser, fetchLoginUserRequest, setlogoutUser } =
+  loginUserSlice.actions;
 export default loginUserSlice.reducer;

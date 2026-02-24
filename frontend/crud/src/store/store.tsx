@@ -4,6 +4,7 @@ import registerUserSliceReducer from "../redux slices/registerUserSlice";
 import loginUserSliceReducer from "../redux slices/loginUserSlice";
 import deleteUserSliceReducer from "../redux slices/deleteUserSlice";
 import addItemsSliceReducer from "../redux slices/addItemsSlice";
+import loadingAndErrorSliceReducer from "../redux slices/loadingAndErrorSlice";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "../redux saga/rootSage";
 const sagaMiddleware = createSagaMiddleware();
@@ -15,6 +16,7 @@ const store = configureStore({
     LoginInfoData: loginUserSliceReducer,
     logoutUser: deleteUserSliceReducer,
     itemInfo: addItemsSliceReducer,
+    loadingData: loadingAndErrorSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),

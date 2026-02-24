@@ -1,14 +1,11 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import {
-  setLoading,
-  setError,
-  fetchUserItems,
-} from "../redux slices/getUserItemsSlice";
+import { fetchUserItems } from "../redux slices/getUserItemsSlice";
 
 import { setGetUserItems } from "../redux slices/userInfoSlice";
 import { fetchApi } from "../utilities/apiHeader";
 import type { itemsType, UserType } from "../utilities/interfaces";
+import { clearLoading, setError, setLoading } from "../redux slices/loadingAndErrorSlice";
 interface AddItemResponse {
   msg: string;
   user: UserType;
@@ -30,6 +27,8 @@ function* fetchGetUserItems(action: PayloadAction<{ userId: number }>) {
         item: response.items || [], // safe fallback
       }),
     );
+        yield put(clearLoading());
+    
   } catch (error: any) {
     const message =
       error?.response?.data?.msg ||

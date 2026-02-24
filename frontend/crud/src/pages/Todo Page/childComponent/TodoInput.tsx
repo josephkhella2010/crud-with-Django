@@ -3,11 +3,7 @@ import { taskInput } from "../../../utilities/Arrays";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
 import { fetchUserItems } from "../../../redux slices/getUserItemsSlice";
-import {
-  fetchAddItem,
-  setError,
-  setLoading,
-} from "../../../redux slices/addItemsSlice";
+import { fetchAddItem } from "../../../redux slices/addItemsSlice";
 import { fetchUsersRequest } from "../../../redux slices/userInfoSlice";
 import { fetchDeleteUserItemReqest } from "../../../redux slices/deleteUserItemSlice";
 import { useNavigate } from "react-router-dom";
@@ -187,15 +183,12 @@ export default function TodoInput({ handleEdit }: PropsType) {
         toast.error("please fill all field");
         return;
       }
-      dispatch(setLoading());
 
       if (id) {
         dispatch(fetchAddItem({ userId: Number(id), item: inputVal }));
         setInputVal({ title: "", task: "", complete: false });
       }
-    } catch (error: any) {
-      dispatch(setError(error));
-    }
+    } catch (error: any) {}
   };
   /* get users */
   useEffect(() => {

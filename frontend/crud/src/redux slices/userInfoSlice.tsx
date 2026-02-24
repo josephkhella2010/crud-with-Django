@@ -3,38 +3,23 @@ import type { itemsType, UserType } from "../utilities/interfaces";
 
 interface UserInfoSliceType {
   users: UserType[];
-  loading: boolean;
-  error: string | null;
   items: itemsType[];
 }
 const initialState: UserInfoSliceType = {
   users: [],
-  loading: false,
-  error: null,
   items: [],
 };
 const userInfoSlice = createSlice({
   name: "userInfoSlice",
   initialState,
   reducers: {
-    /*  this is  all users */
-    fetchUserLoading: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-
-    fetchUserFailed: (state, action: PayloadAction<string | null>) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    fetchUsersRequest: (state) => {
-      // this action is just a trigger for saga
-      state.loading = true;
-      state.error = null;
+  
+   
+    fetchUsersRequest: (_state) => {
+   
     },
     setUsers: (state, action: PayloadAction<UserType[]>) => {
       state.users = action.payload;
-      state.loading = false;
     },
     /* add user  */
     setAddUser: (state, action: PayloadAction<UserType>) => {
@@ -51,9 +36,6 @@ const userInfoSlice = createSlice({
         state.users.push(action.payload);
       }
       localStorage.setItem("user", JSON.stringify(action.payload));
-
-      state.loading = false;
-      state.error = null;
 
       // update localStorage for sync
     },
@@ -119,9 +101,7 @@ const userInfoSlice = createSlice({
 });
 
 export const {
-  fetchUserLoading,
   setUsers,
-  fetchUserFailed,
   fetchUsersRequest,
   setAddUser,
   setUpadteUser,

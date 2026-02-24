@@ -46,19 +46,18 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import {
-  loadingDeleteUser,
-  setDeleteError,
   fetchDeleteUsersRequest,
   setDeleteUser,
 } from "../redux slices/deleteUserSlice";
 
 import { fetchApi } from "../utilities/apiHeader";
 import { toast } from "react-toastify";
+import { clearLoading, setError, setLoading } from "../redux slices/loadingAndErrorSlice";
 
 /* 🧠 Worker */
 function* fetchDeleteUser(action: PayloadAction<number>) {
   try {
-    yield put(loadingDeleteUser());
+    yield put(setLoading());
 
     // ✅ Use shared API helper (JWT automatically included)
     yield call(
@@ -72,13 +71,15 @@ function* fetchDeleteUser(action: PayloadAction<number>) {
     yield put(setDeleteUser());
 
     toast.success("User Deleted successfully");
+        yield put(clearLoading());
+    
   } catch (error: any) {
     const message =
       error?.response?.data?.sms ||
       error?.response?.data?.error ||
       "Delete failed";
 
-    yield put(setDeleteError(message));
+    yield put(setError(message));
   }
 }
 

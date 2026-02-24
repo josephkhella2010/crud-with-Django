@@ -1,18 +1,14 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { UserType } from "../utilities/interfaces";
-
-import {
-  fetchLoading,
-  fetchError,
-  fetchUpdateUserRequest,
-} from "../redux slices/updateUserSlice";
+import { fetchUpdateUserRequest } from "../redux slices/updateUserSlice";
 import {
   fetchUsersRequest,
   setUpadteUser,
 } from "../redux slices/userInfoSlice"; // <--- import from users slice
 import { toast } from "react-toastify";
 import { fetchApi } from "../utilities/apiHeader";
+import { clearLoading, setError, setLoading } from "../redux slices/loadingAndErrorSlice";
 
 async function apiUpdate(userId: number, payload: UserType): Promise<UserType> {
   return await fetchApi<UserType>(
@@ -27,7 +23,7 @@ function* fetchUpdateUser(
   action: PayloadAction<{ id: number; data: UserType }>,
 ) {
   try {
-    yield put(fetchLoading());
+    yield put(setLoading());
     const apiResponse: { sms: string; user: UserType } = yield call(
       apiUpdate,
       action.payload.id,
@@ -45,12 +41,13 @@ function* fetchUpdateUser(
 
     // optional: refresh all users
     yield put(fetchUsersRequest());
+    yield put(clearLoading());
   } catch (error: any) {
     const message =
       error?.response?.data?.sms ||
       error?.response?.data?.error ||
       "Update failed";
-    yield put(fetchError(message));
+    yield put(setError(message));
   }
 }
 

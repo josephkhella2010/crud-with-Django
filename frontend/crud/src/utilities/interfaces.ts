@@ -65,3 +65,8 @@ export interface TaskInputType {
   task: string;
   complete: boolean;
 }
+
+export interface initialStateType {
+  loading: boolean;
+  error: null | string;
+}

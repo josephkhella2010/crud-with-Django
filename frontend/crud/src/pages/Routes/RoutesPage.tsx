@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "../home/HomePage";
 import AboutPage from "../about/AboutPage";
 import RegisterPage from "../register Page/RegisterPage";
@@ -11,21 +11,27 @@ import NavigationContainer from "../navigation/NavigationContainer";
 import SettingPage from "../setting Page/SettingPage";
 import UserInfoPage from "../UserInfoPage/UserInfoPage";
 import { createUseStyles } from "react-jss";
+import LoadingPage from "../loadingPage/LoadingPage";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
 
 export const cssStyle = createUseStyles({
   mainWrapper: {
     padding: "60px 0px 0px 0px",
+    position: "relative",
   },
 });
 
 export default function RoutesPage() {
   const classes = cssStyle();
+  const { loading } = useSelector((state: RootState) => state.loadingData);
   return (
     <div>
       <ToastContainer />{" "}
       <Router>
         <NavigationContainer />
         <div className={classes.mainWrapper}>
+          {loading && <LoadingPage />}
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about-us" element={<AboutPage />} />
