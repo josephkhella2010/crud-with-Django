@@ -4,7 +4,7 @@ import type {
   registerInputType,
   UsersResponse,
 } from "../../../utilities/interfaces";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRegisterUserRequest } from "../../../redux slices/registerUserSlice";
 import type { RootState } from "../../../store/store";
