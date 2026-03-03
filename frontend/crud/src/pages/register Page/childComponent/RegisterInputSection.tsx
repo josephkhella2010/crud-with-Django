@@ -163,8 +163,9 @@ export default function RegisterInputSection() {
     }
     try {
       const newUser = {
-        username: registerInputVal.username,
-        email: registerInputVal.email,
+        ...registerInputVal,
+        username: registerInputVal.username.toLowerCase().trim(),
+        email: registerInputVal.email.toLowerCase().trim(),
         password: registerInputVal.password,
         repassword: registerInputVal.repassword,
       };

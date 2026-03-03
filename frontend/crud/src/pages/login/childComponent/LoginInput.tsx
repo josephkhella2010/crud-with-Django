@@ -129,7 +129,8 @@ export default function LoginInput() {
     if (newErrors.some((item) => item !== "")) return;
     try {
       const newLoginUser = {
-        username: loginVal.username,
+        ...loginVal,
+        username: loginVal.username.toLowerCase().trim(),
         password: loginVal.password,
       };
       dispatch(fetchLoginUserRequest(newLoginUser));
